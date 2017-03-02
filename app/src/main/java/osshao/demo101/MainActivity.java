@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -88,10 +89,11 @@ public class MainActivity extends AppCompatActivity implements Observer, View.On
     public void onFirstEventReceived(FirstEvent firstEvent) {
 
 
-        eventElement.setTitle(firstEvent.getTitle());
-        eventElement.setContent(firstEvent.getContent());
+        EventElement e = new EventElement();
+        e.setTitle(firstEvent.getTitle());
+        e.setContent(firstEvent.getContent());
 
-        list.add(eventElement);
+        list.add(e);
 
         adapter.notifyDataSetChanged();
     }
@@ -108,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements Observer, View.On
                 adapter.notifyDataSetChanged();
             }
         });
+        listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
     }
 
     @Override

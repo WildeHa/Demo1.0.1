@@ -26,25 +26,32 @@ public class UpdateService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+
         firstEvent = new FirstEvent();
-        int count = 0;
-        do {
 
-            Log.v("MainActivity", "Sending Event" + count);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int count = 0;
 
-            firstEvent.setTitle("Counting");
-            firstEvent.setContent("Times: " + count);
+                while (count < 20) {
+                    count++;
+                    Log.v("MainActivity", "Sending Event" + count);
 
-            EventBus.getDefault().post(firstEvent);
+                    firstEvent.setTitle("Counting");
+                    firstEvent.setContent("Times: " + count);
 
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                    EventBus.getDefault().post(firstEvent);
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-            count++;
+        }).start();
 
-        } while (count < 20);
 
     }
 }
